@@ -95,3 +95,41 @@ def print_topics(model, vectorizer, top_n=10):
         print(" ".join([words[i] for i in topic.argsort()[:-top_n - 1:-1]]))
 
 print_topics(lda, vectorizer)
+import cv2
+import os
+
+# Yuzni aniqlash uchun oldindan tayyorlangan ma'lumotlar to'plami
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+# Yuzni aniqlash va rasmga olish funksiyasi
+def capture_face(employee_id):
+    cam = cv2.VideoCapture(0)
+    cv2.namedWindow("Yuzni aniqlash")
+
+    while True:
+        ret, frame = cam.read()
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+        cv2.imshow("Yuzni aniqlash", frame)
+
+        if len(faces) > 0:
+            img_name = f"employee_{employee_id}.png"
+            cv2.imwrite(img_name, frame)
+            print(f"{img_name} saqlandi!")
+            break
+
+        k = cv2.waitKey(1)
+        if k % 256 == 27:  # ESC tugmasini bosish
+            print("Chiqildi!")
+            break
+
+    cam.release()
+    cv2.destroyAllWindows()
+
+# Ishchi ID raqamini kiriting
+employee_id = input("Iltimos, ishchi ID raqamini kiriting: ")
+capture_face(employee_id)
