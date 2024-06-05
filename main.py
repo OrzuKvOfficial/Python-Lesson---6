@@ -159,3 +159,10 @@ def analyze_code(code):
         print(result.stdout)
     else:
         print("No issues found by Pylint.")
+def main(file_path):
+    code = read_code(file_path)
+    analyze_code(code)
+
+if __name__ == "__main__":
+    file_path = 'your_code.py'  # Bu yerda tahlil qilinadigan fayl nomini kiriting
+    main(file_path)
