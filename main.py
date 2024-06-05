@@ -133,3 +133,29 @@ def capture_face(employee_id):
 # Ishchi ID raqamini kiriting
 employee_id = input("Iltimos, ishchi ID raqamini kiriting: ")
 capture_face(employee_id)
+import ast
+import subprocess
+
+def analyze_code(code):
+    try:
+        # AST (Abstract Syntax Tree) yordamida tahlil qilish
+        tree = ast.parse(code)
+        print("AST analysis successful!")
+    except SyntaxError as e:
+        print(f"Syntax error: {e}")
+
+    # flake8 yordamida kodni tahlil qilish
+    result = subprocess.run(['flake8', '--stdin-display-name', 'stdin', '-'], input=code, text=True, capture_output=True)
+    if result.stdout:
+        print("Flake8 Analysis:")
+        print(result.stdout)
+    else:
+        print("No issues found by Flake8.")
+
+    # pylint yordamida kodni tahlil qilish
+    result = subprocess.run(['pylint', '--from-stdin'], input=code, text=True, capture_output=True)
+    if result.stdout:
+        print("Pylint Analysis:")
+        print(result.stdout)
+    else:
+        print("No issues found by Pylint.")
