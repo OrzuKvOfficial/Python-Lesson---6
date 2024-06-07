@@ -166,3 +166,33 @@ def main(file_path):
 if __name__ == "__main__":
     file_path = 'your_code.py'  # Bu yerda tahlil qilinadigan fayl nomini kiriting
     main(file_path)
+import cv2
+import face_recognition
+
+# Video olish uchun kamera ochish
+video_capture = cv2.VideoCapture(0)
+
+while True:
+    # Videodan bir frame o'qish
+    ret, frame = video_capture.read()
+
+    # Frame'ni RGB formatiga o'zgartirish (OpenCV BGR formatidan foydalanadi)
+    rgb_frame = frame[:, :, ::-1]
+
+    # Frame'dagi barcha yuzlarni topish
+    face_locations = face_recognition.face_locations(rgb_frame)
+
+    for top, right, bottom, left in face_locations:
+        # Yuzning atrofini chizish
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+
+    # Oynada natijani ko'rsatish
+    cv2.imshow('Video', frame)
+
+    # 'q' tugmasini bosish orqali chiqish
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Videoni yakunlash
+video_capture.release()
+cv2.destroyAllWindows()
