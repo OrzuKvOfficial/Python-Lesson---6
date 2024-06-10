@@ -339,3 +339,35 @@ df['new_column'] = df['existing_column'] * 2
 
 # Ustunni o'chirish
 df.drop(columns=['column_to_drop'], inplace=True)
+
+import pandas as pd
+import numpy as np
+
+# 1. Ma'lumotlarni yuklash
+df = pd.read_csv('employees.csv')
+
+# 2. Ma'lumotlarni tahlil qilish
+print("Dastlabki 5 qator:")
+print(df.head())
+
+print("\nMa'lumotlar to'plami haqida:")
+print(df.info())
+
+print("\nStatistik ma'lumotlar:")
+print(df.describe())
+
+# 3. Ustunlar va qatorlarni taxrirlash
+# Ustun nomlarini o'zgartirish
+df.rename(columns={'Name': 'Full Name', 'Salary': 'Annual Salary'}, inplace=True)
+
+# Yangi ustun qo'shish (masalan, yillik bonus 10% maosh asosida)
+df['Bonus'] = df['Annual Salary'] * 0.10
+
+# Shartga ko'ra qatorlarni filtr qilish (masalan, yoshi 30 dan katta bo'lgan xodimlar)
+df_above_30 = df[df['Age'] > 30]
+
+# Jins bo'yicha guruhlash va har bir guruh uchun o'rtacha maoshni hisoblash
+average_salary_by_gender = df.groupby('Gender')['Annual Salary'].mean()
+
+print("\nJins bo'yicha o'rtacha maosh:")
+print(average_salary_by_gender)
