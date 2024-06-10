@@ -371,3 +371,32 @@ average_salary_by_gender = df.groupby('Gender')['Annual Salary'].mean()
 
 print("\nJins bo'yicha o'rtacha maosh:")
 print(average_salary_by_gender)
+# Bo'sh qiymatlar bilan ishlash
+# Bo'sh qiymatlarni to'ldirish (masalan, bo'sh yoshi uchun o'rtacha yoshni qo'yish)
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+
+# Maosh bo'sh bo'lsa, uni 0 ga to'ldirish
+df['Annual Salary'].fillna(0, inplace=True)
+
+# Bo'sh qiymatlarni o'chirish (masalan, bo'sh ismli qatorlarni o'chirish)
+df.dropna(subset=['Full Name'], inplace=True)
+
+# Qatorlarni aralash va qayta indekslash
+df = df.sample(frac=1).reset_index(drop=True)
+
+# 4. Yana qo'shimcha taxrirlash
+# Maoshni valyuta formatida ifodalash
+df['Annual Salary'] = df['Annual Salary'].apply(lambda x: "${:,.2f}".format(x))
+
+# Yoshi katta va kichik 5 ta xodimni ko'rish
+oldest_5 = df.nlargest(5, 'Age')
+youngest_5 = df.nsmallest(5, 'Age')
+
+print("\nYoshi katta 5 xodim:")
+print(oldest_5)
+
+print("\nYoshi kichik 5 xodim:")
+print(youngest_5)
+
+# 5. Ma'lumotlarni saqlash
+df.to_csv('edited_employees.csv', index=False)
