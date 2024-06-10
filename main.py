@@ -330,3 +330,12 @@ df['new_column'] = df['existing_column'] * 2
 
 # Ustunni o'chirish
 df.drop(columns=['column_to_drop'], inplace=True)
+
+# Ustun nomlarini o'zgartirish
+df.rename(columns={'old_name': 'new_name'}, inplace=True)
+
+# Yangi ustun qo'shish
+df['new_column'] = df['existing_column'] * 2
+
+# Ustunni o'chirish
+df.drop(columns=['column_to_drop'], inplace=True)
