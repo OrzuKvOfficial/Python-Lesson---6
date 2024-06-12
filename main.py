@@ -400,3 +400,29 @@ print(youngest_5)
 
 # 5. Ma'lumotlarni saqlash
 df.to_csv('edited_employees.csv', index=False)
+
+import pandas as pd
+from datetime import datetime
+
+# Dastlabki ma'lumotlar faylini yaratamiz yoki mavjud bo'lsa yuklaymiz
+try:
+    health_data = pd.read_csv('health_data.csv')
+except FileNotFoundError:
+    columns = ['Date', 'Water (L)', 'Sleep (hours)', 'Exercise (minutes)', 'Notes']
+    health_data = pd.DataFrame(columns=columns)
+
+# Foydalanuvchi ma'lumotlarini kiritish
+date = datetime.now().strftime('%Y-%m-%d')
+water = float(input("Bugun qancha suv ichdingiz? (L): "))
+sleep = float(input("Kecha qancha soat uxladingiz? (hours): "))
+exercise = float(input("Bugun qancha daqiqa jismoniy mashqlar qildingiz? (minutes): "))
+notes = input("Bugungi sog'lig'ingiz haqida izohlar: ")
+
+# Yangi ma'lumotlarni DataFrame ga qo'shish
+new_data = pd.DataFrame([[date, water, sleep, exercise, notes]], columns=health_data.columns)
+health_data = pd.concat([health_data, new_data], ignore_index=True)
+
+# Ma'lumotlarni CSV fayliga saqlash
+health_data.to_csv('health_data.csv', index=False)
+
+print("Ma'lumotlaringiz saqlandi. Sog'lig'ingizni kuzatishda davom eting!")
