@@ -426,3 +426,42 @@ health_data = pd.concat([health_data, new_data], ignore_index=True)
 health_data.to_csv('health_data.csv', index=False)
 
 print("Ma'lumotlaringiz saqlandi. Sog'lig'ingizni kuzatishda davom eting!")
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+import string
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+class PydaAqili:
+    def __init__(self):
+        self.name = "Pyda Aqili"
+        self.greetings = ["hello", "hi", "hey", "greetings", "sup", "what's up"]
+        self.responses = {
+            "how are you": "I'm an AI, so I don't have feelings, but thanks for asking!",
+            "what is your name": "I am Pyda Aqili, your friendly AI assistant.",
+            "bye": "Goodbye! Have a nice day!"
+        }
+        self.stop_words = set(stopwords.words('english') + list(string.punctuation))
+    
+    def preprocess_text(self, text):
+        tokens = word_tokenize(text.lower())
+        filtered_tokens = [word for word in tokens if word not in self.stop_words]
+        return filtered_tokens
+    
+    def get_response(self, user_input):
+        processed_input = self.preprocess_text(user_input)
+        for word in processed_input:
+            if word in self.greetings:
+                return "Hello! How can I assist you today?"
+            elif word in self.responses:
+                return self.responses[word]
+        return "I'm sorry, I don't understand that."
+
+# Example interaction
+bot = PydaAqili()
+print(bot.get_response("Hello"))
+print(bot.get_response("What is your name?"))
+print(bot.get_response("How are you?"))
+print(bot.get_response("Bye"))
