@@ -465,3 +465,9 @@ print(bot.get_response("Hello"))
 print(bot.get_response("What is your name?"))
 print(bot.get_response("How are you?"))
 print(bot.get_response("Bye"))
+def divide(a, b):
+    import pdb; pdb.set_trace()  # Bu yerda ushlab tekshirishni boshlaydi
+    return a / b
+
+result = divide(10, 0)
+print(result)
