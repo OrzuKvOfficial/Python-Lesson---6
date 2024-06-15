@@ -471,3 +471,32 @@ def divide(a, b):
 
 result = divide(10, 0)
 print(result)
+import matplotlib.pyplot as plt
+import numpy as np
+
+def pyda_budunlugu_boyut_hesapla(uzunluk, genislik):
+    # Kumaş miktarını hesaplama (iki parça için)
+    toplam_alan = 2 * (uzunluk * genislik)
+    return toplam_alan
+
+def pyda_budunlugu_sablon_ciz(uzunluk, genislik):
+    # Şablon çizme
+    fig, ax = plt.subplots()
+    oval = plt.Circle((genislik / 2, uzunluk / 2), radius=min(uzunluk, genislik) / 2, edgecolor='r', facecolor='none')
+    ax.add_patch(oval)
+    plt.xlim(0, genislik)
+    plt.ylim(0, uzunluk)
+    ax.set_aspect('equal', adjustable='box')
+    plt.title('Pyda Budunluğu Şablonu')
+    plt.show()
+
+# Pyda budunluğu boyutları (cm cinsinden)
+uzunluk = 80  # uzunluk
+genislik = 50  # genişlik
+
+# Kumaş miktarını hesaplama
+toplam_kumas_alani = pyda_budunlugu_boyut_hesapla(uzunluk, genislik)
+print(f"Toplam kumaş alanı: {toplam_kumas_alani} cm^2")
+
+# Şablonu çizme
+pyda_budunlugu_sablon_ciz(uzunluk, genislik)
