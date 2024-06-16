@@ -500,3 +500,6 @@ print(f"Toplam kumaş alanı: {toplam_kumas_alani} cm^2")
 
 # Şablonu çizme
 pyda_budunlugu_sablon_ciz(uzunluk, genislik)
+my_list = [{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 20}]
+sorted_list = sorted(my_list, key=lambda x: x['age'])
+print(sorted_list)
