@@ -503,3 +503,50 @@ pyda_budunlugu_sablon_ciz(uzunluk, genislik)
 my_list = [{'name': 'Alice', 'age': 25}, {'name': 'Bob', 'age': 30}, {'name': 'Charlie', 'age': 20}]
 sorted_list = sorted(my_list, key=lambda x: x['age'])
 print(sorted_list)
+import time
+
+def measure_sort_time(sort_function, data):
+    start_time = time.time()
+    sort_function(data)
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    return elapsed_time
+
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+# Misol uchun ro'yxat yaratamiz
+import random
+data_size = 1000
+random_data = [random.randint(0, 1000) for _ in range(data_size)]
+
+# Saralash algoritmlari uchun vaqtni o'lchaymiz
+bubble_sort_time = measure_sort_time(bubble_sort, random_data.copy())
+insertion_sort_time = measure_sort_time(insertion_sort, random_data.copy())
+quick_sort_time = measure_sort_time(quick_sort, random_data.copy())
+
+print(f"Bubble sort vaqti: {bubble_sort_time:.6f} soniya")
+print(f"Insertion sort vaqti: {insertion_sort_time:.6f} soniya")
+print(f"Quick sort vaqti: {quick_sort_time:.6f} soniya")
