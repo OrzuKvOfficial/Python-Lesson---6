@@ -550,3 +550,25 @@ quick_sort_time = measure_sort_time(quick_sort, random_data.copy())
 print(f"Bubble sort vaqti: {bubble_sort_time:.6f} soniya")
 print(f"Insertion sort vaqti: {insertion_sort_time:.6f} soniya")
 print(f"Quick sort vaqti: {quick_sort_time:.6f} soniya")
+import os
+
+def pyda_katta_project_info(directory):
+    project_files = []
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".pyda") or file.endswith(".katta"):
+                file_path = os.path.join(root, file)
+                project_files.append(file_path)
+
+    return project_files
+
+# Istalgan direktoriyani kiriting
+directory = "/path/to/your/project"
+project_files = pyda_katta_project_info(directory)
+
+if project_files:
+    print("Pyda Katta Project fayllari:")
+    for file in project_files:
+        print(file)
+else:
+    print("Hech qanday Pyda Katta Project fayli topilmadi.")
