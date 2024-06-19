@@ -572,3 +572,15 @@ if project_files:
         print(file)
 else:
     print("Hech qanday Pyda Katta Project fayli topilmadi.")
+from telegram.ext import Updater, CommandHandler
+
+def start(update, context):
+    update.message.reply_text('Salom, men botman!')
+
+updater = Updater('YOUR_TOKEN', use_context=True)
+dp = updater.dispatcher
+
+dp.add_handler(CommandHandler('start', start))
+
+updater.start_polling()
+updater.idle()
