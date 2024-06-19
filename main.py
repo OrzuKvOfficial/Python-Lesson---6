@@ -603,3 +603,18 @@ def main():
 
 if __name__ == '__main__':
     main()
+def help_command(update, context):
+    update.message.reply_text('Bu bot sizga yordam beradi. Komandalar:\n/start - Boshlash\n/help - Yordam')
+
+def main():
+    updater = Updater('YOUR_TOKEN', use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(CommandHandler('help', help_command))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
