@@ -584,3 +584,22 @@ dp.add_handler(CommandHandler('start', start))
 
 updater.start_polling()
 updater.idle()
+from telegram.ext import Updater, CommandHandler
+
+def start(update, context):
+    update.message.reply_text('Salom, men botman!')
+
+def main():
+    # Telegram bot tokenini kiriting
+    updater = Updater('YOUR_TOKEN', use_context=True)
+    dp = updater.dispatcher
+
+    # /start komandasini ishlashini o'rnatish
+    dp.add_handler(CommandHandler('start', start))
+
+    # Botni ishga tushirish
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
