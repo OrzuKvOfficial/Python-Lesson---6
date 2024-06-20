@@ -636,3 +636,34 @@ def main():
 
 if __name__ == '__main__':
     main()
+import openai
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+# OpenAI API kalitini kiriting
+openai.api_key = 'YOUR_OPENAI_API_KEY'
+
+def gpt3_response(text):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=text,
+        max_tokens=50
+    )
+    return response.choices[0].text.strip()
+
+def echo(update, context):
+    user_message = update.message.text
+    bot_response = gpt3_response(user_message)
+    update.message.reply_text(bot_response)
+
+def main():
+    updater = Updater('YOUR_TELEGRAM_BOT_TOKEN', use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
