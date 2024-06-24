@@ -729,3 +729,11 @@ print(my_list)  # Output: [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]
 # Sorting a list in descending order
 my_list.sort(reverse=True)
 print(my_list)  # Output: [9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1]
+numbers = [3, 1, 4, 2]
+numbers.sort()
+print(numbers)  # [1, 2, 3, 4]
+
+# Yoki
+numbers = [3, 1, 4, 2]
+sorted_numbers = sorted(numbers)
+print(sorted_numbers)  # [1, 2, 3, 4]
