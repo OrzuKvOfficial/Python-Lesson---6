@@ -737,3 +737,35 @@ print(numbers)  # [1, 2, 3, 4]
 numbers = [3, 1, 4, 2]
 sorted_numbers = sorted(numbers)
 print(sorted_numbers)  # [1, 2, 3, 4]
+# Bo'sh list yaratish
+my_list = []
+
+# Elementlar bilan list yaratish
+my_list = [1, 2, 3, 4, 5]
+
+# Oxiriga element qo'shish
+my_list.append(6)
+
+# Belgilangan indeksga element qo'shish
+my_list.insert(2, 'new_element')  # 2-indeksga yangi element qo'shildi
+
+# Belgilangan indeksdagi elementni o'chirish
+del my_list[3]
+
+# Berilgan qiymatni o'chirish
+my_list.remove('new_element')
+
+# Belgilangan indeksdagi elementni o'zgartirish
+my_list[1] = 'changed_element'
+
+# Listni bo'ylab yurish
+for element in my_list:
+    print(element)
+
+# List uzunligini aniqlash
+length_of_list = len(my_list)
+print(f"List uzunligi: {length_of_list}")
+
+# Listni bo'lish (slice)
+sub_list = my_list[1:4]  # 1-indeksdan 4-indeksgacha bo'lgan elementlarni oladi (4-indeks o'z ichiga olmagan holda)
+print(f"Sub-list: {sub_list}")
