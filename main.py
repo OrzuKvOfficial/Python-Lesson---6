@@ -769,3 +769,19 @@ print(f"List uzunligi: {length_of_list}")
 # Listni bo'lish (slice)
 sub_list = my_list[1:4]  # 1-indeksdan 4-indeksgacha bo'lgan elementlarni oladi (4-indeks o'z ichiga olmagan holda)
 print(f"Sub-list: {sub_list}")
+# Ikki listni birlashtirish
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+combined_list = list1 + list2
+print(f"Birlashtirilgan list: {combined_list}")
+
+# Listlarni o'zgartirmasdan birlashtirish uchun itertools.chain
+from itertools import chain
+combined_list_chain = list(chain(list1, list2))
+print(f"Chain bilan birlashtirilgan list: {combined_list_chain}")
+
+# List bo'sh yoki to'la ekanligini tekshirish
+if not my_list:
+    print("List bo'sh")
+else:
+    print("Listda elementlar bor")
