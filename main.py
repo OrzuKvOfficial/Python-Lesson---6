@@ -785,3 +785,8 @@ if not my_list:
     print("List bo'sh")
 else:
     print("Listda elementlar bor")
+    # Dosyayı okuma modunda açar (varsayılan olarak UTF-8 kodlaması kullanılır)
+with open('dosya_adı.txt', 'r', encoding='utf-8') as dosya:
+    içerik = dosya.read()
+
+print(içerik)
