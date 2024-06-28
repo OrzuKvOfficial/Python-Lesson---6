@@ -846,3 +846,19 @@ while running:
 
 pygame.quit()
 sys.exit()
+import numpy as np
+import pandas as pd
+
+# Rastgele bir zaman serisi verisi oluşturma
+np.random.seed(0)
+data = np.random.randn(100) + np.arange(100) * 0.1
+
+# Veri çerçevesi oluşturma
+df = pd.DataFrame(data, columns=['data'])
+
+# Hareketli ortalama hesaplama (pencere boyutu 5)
+window_size = 5
+df['sma'] = df['data'].rolling(window=window_size).mean()
+
+# Sonuçları gösterme
+print(df.head(10))
