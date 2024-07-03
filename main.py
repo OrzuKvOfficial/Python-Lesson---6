@@ -1,22 +1,28 @@
-from textblob import TextBlob
+from flask import Flask, render_template, Response
+import cv2
 
-def check_text(text):
-    blob = TextBlob(text)
-    corrected_text = blob.correct()
-    return corrected_text
+app = Flask(__name__)
 
-# Misol uchun, foydalanuvchidan matn olish va uni tekshirish
-user_input = input("Matin kiriting: ")
-corrected_text = check_text(user_input)
-print(f"Tuzatilgan matn: {corrected_text}")
-from textblob import TextBlob
+camera = cv2.VideoCapture(0)  # 0 ilk kamera cihazını ifade eder
 
-def check_text(text):
-    blob = TextBlob(text)
-    corrected_text = blob.correct()
-    return corrected_text
+def gen_frames():
+    while True:
+        success, frame = camera.read()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-# Misol uchun, foydalanuvchidan matn olish va uni tekshirish
-user_input = input("Matin kiriting: ")
-corrected_text = check_text(user_input)
-print(f"Tuzatilgan matn: {corrected_text}")
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
