@@ -1,28 +1,40 @@
-from flask import Flask, render_template, Response
-import cv2
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-app = Flask(__name__)
+def send_email(from_address, to_address, subject, body, smtp_server, smtp_port, login, password):
+    try:
+        # Create message container
+        msg = MIMEMultipart()
+        msg['From'] = from_address
+        msg['To'] = to_address
+        msg['Subject'] = subject
 
-camera = cv2.VideoCapture(0)  # 0 ilk kamera cihazını ifade eder
+        # Attach body text
+        msg.attach(MIMEText(body, 'plain'))
 
-def gen_frames():
-    while True:
-        success, frame = camera.read()
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        # Setup the server
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Enable security
+        server.login(login, password)
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+        # Send the email
+        server.sendmail(from_address, to_address, msg.as_string())
+        server.quit()
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+        print("Email successfully sent!")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    except Exception as e:
+        print(f"Failed to send email. Error: {str(e)}")
+
+# Kullanım örneği:
+from_address = 'sizin.email@ornek.com'
+to_address = 'alici.email@ornek.com'
+subject = 'Test Email'
+body = 'Bu bir test emailidir.'
+smtp_server = 'smtp.gmail.com'
+smtp_port = 587
+login = 'sizin.email@ornek.com'
+password = 'sifre'
+
+send_email(from_address, to_address, subject, body, smtp_server, smtp_port, login, password)
