@@ -1,21 +1,22 @@
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
+import tkinter as tk
+from time import strftime
 
-# Chatbotni yaratish
-chatbot = ChatBot('SimpleBot')
+# Oynani yaratish
+root = tk.Tk()
+root.title("Soat")
 
-# Trenerni sozlash
-trainer = ChatterBotCorpusTrainer(chatbot)
+# Soat funksiyasini yaratish
+def time():
+    string = strftime('%H:%M:%S %p')
+    label.config(text=string)
+    label.after(1000, time)
 
-# Chatbotni inglizcha korpus bilan o'qitish
-trainer.train("chatterbot.corpus.english")
+# Labelni yaratish
+label = tk.Label(root, font=('calibri', 40, 'bold'), background='purple', foreground='white')
+label.pack(anchor='center')
 
-# Chatbot bilan muloqot qilish
-while True:
-    try:
-        user_input = input("Siz: ")
-        response = chatbot.get_response(user_input)
-        print(f"Bot: {response}")
+# Soat funksiyasini chaqirish
+time()
 
-    except (KeyboardInterrupt, EOFError, SystemExit):
-        break
+# Oynani ishga tushirish
+root.mainloop()
