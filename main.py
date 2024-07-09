@@ -1,16 +1,16 @@
-from flask import Flask, request
+import zipfile
+import os
 
-app = Flask(__name__)
+def zip_files(directory, output_zip):
+    with zipfile.ZipFile(output_zip, 'w') as zipf:
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, os.path.relpath(file_path, directory))
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return 'No file part', 400
-    file = request.files['file']
-    if file.filename == '':
-        return 'No selected file', 400
-    file.save(f'uploads/{file.filename}')
-    return 'File uploaded successfully', 200
+# Misol uchun, "my_folder" papkasidagi barcha fayllarni "output.zip" ga siqish
+directory_to_zip = 'my_folder'
+output_zip_file = 'output.zip'
+zip_files(directory_to_zip, output_zip_file)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+print(f"{output_zip_file} fayli muvaffaqiyatli yaratildi.")
