@@ -1,47 +1,40 @@
-# List yaratish
-my_list = [1, 2, 3, 4, 5]
+# NumPy va Pandas bilan ishlash
+import numpy as np
+import pandas as pd
 
-# List elementlariga murojaat qilish
-print(my_list[0])  # Birinchi element
-print(my_list[-1])  # So'nggi element
+# Ma'lumotlarni vizualizatsiya qilish
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Listga yangi element qo'shish
-my_list.append(6)
-print(my_list)
+# Ma'lumotlarni bo'lish
+from sklearn.model_selection import train_test_split
 
-# Listdan elementni olib tashlash
-my_list.remove(3)
-print(my_list)
+# Model yaratish
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-# Listni birlashtirish
-another_list = [7, 8, 9]
-combined_list = my_list + another_list
-print(combined_list)
+# Ma'lumotlarni o'qish
+data = pd.read_csv('data.csv')
 
-# Listni tartiblash
-my_list.sort()
-print(my_list)
-my_list.sort(reverse=True)
-print(my_list)
+# Ma'lumotlarni tahlil qilish va tayyorlash
+X = data[['feature1', 'feature2']]
+y = data['target']
 
-# Listni aylantirish (iteratsiya)
-for element in my_list:
-    print(element)
+# Ma'lumotlarni o'quv va test to'plamlariga ajratish
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# List comprehension
-squares = [x**2 for x in range(10)]
-print(squares)
+# Modelni yaratish va o'qitish
+model = LinearRegression()
+model.fit(X_train, y_train)
 
-# List uzunligini aniqlash
-length_of_list = len(my_list)
-print(length_of_list)
+# Modelni baholash
+predictions = model.predict(X_test)
+mse = mean_squared_error(y_test, predictions)
 
-# List elementlarini tekshirish
-if 3 in my_list:
-    print("3 ro'yxatda bor")
-else:
-    print("3 ro'yxatda yo'q")
+print(f"Mean Squared Error: {mse}")
 
-# Listdan kesmalar olish
-sub_list = my_list[1:4]
-print(sub_list)
+# Natijalarni vizualizatsiya qilish
+plt.scatter(y_test, predictions)
+plt.xlabel('Haqiqiy qiymatlar')
+plt.ylabel('Bashorat qilingan qiymatlar')
+plt.show()
