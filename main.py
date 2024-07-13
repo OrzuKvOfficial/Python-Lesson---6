@@ -1,40 +1,16 @@
-# NumPy va Pandas bilan ishlash
-import numpy as np
-import pandas as pd
+import bluetooth
 
-# Ma'lumotlarni vizualizatsiya qilish
-import matplotlib.pyplot as plt
-import seaborn as sns
+target_name = "My Phone"
+target_address = None
 
-# Ma'lumotlarni bo'lish
-from sklearn.model_selection import train_test_split
+nearby_devices = bluetooth.discover_devices()
 
-# Model yaratish
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+for address in nearby_devices:
+    if target_name == bluetooth.lookup_name(address):
+        target_address = address
+        break
 
-# Ma'lumotlarni o'qish
-data = pd.read_csv('data.csv')
-
-# Ma'lumotlarni tahlil qilish va tayyorlash
-X = data[['feature1', 'feature2']]
-y = data['target']
-
-# Ma'lumotlarni o'quv va test to'plamlariga ajratish
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Modelni yaratish va o'qitish
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-# Modelni baholash
-predictions = model.predict(X_test)
-mse = mean_squared_error(y_test, predictions)
-
-print(f"Mean Squared Error: {mse}")
-
-# Natijalarni vizualizatsiya qilish
-plt.scatter(y_test, predictions)
-plt.xlabel('Haqiqiy qiymatlar')
-plt.ylabel('Bashorat qilingan qiymatlar')
-plt.show()
+if target_address is not None:
+    print("Found target bluetooth device with address", target_address)
+else:
+    print("Could not find target bluetooth device nearby")
