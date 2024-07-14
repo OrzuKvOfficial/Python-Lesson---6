@@ -1,16 +1,21 @@
-import bluetooth
+import os
+import time
 
-target_name = "My Phone"
-target_address = None
+def check_usb_drives():
+    drives_before = set(os.listdir('/media'))
+    
+    while True:
+        time.sleep(2)  # Har 2 soniyada tekshiradi
+        drives_after = set(os.listdir('/media'))
+        new_drives = drives_after - drives_before
+        
+        if new_drives:
+            print(f"Yangi USB qurilmasi ulandi: {new_drives}")
+            return list(new_drives)
+        
+        drives_before = drives_after
 
-nearby_devices = bluetooth.discover_devices()
-
-for address in nearby_devices:
-    if target_name == bluetooth.lookup_name(address):
-        target_address = address
-        break
-
-if target_address is not None:
-    print("Found target bluetooth device with address", target_address)
-else:
-    print("Could not find target bluetooth device nearby")
+if __name__ == "__main__":
+    print("USB qurilmasini ulashni kutyapman...")
+    new_drives = check_usb_drives()
+    print(f"Ulangan yangi USB qurilmasi: {new_drives}")
